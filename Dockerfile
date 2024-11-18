@@ -1,12 +1,15 @@
-FROM amazon/aws-cli:latest
+FROM ubuntu:24.04
 ARG POSTGRES_VERSION
 
-RUN yum update -y \
-    && yum install -y gzip
+RUN apt update && apt install -y curl gzip unzip
 
-WORKDIR /scripts
-COPY install-pg-dump.sh .
-RUN "/scripts/install-pg-dump.sh"
+# install Postgres
+RUN apt -y install postgresql-$POSTGRES_VERSION
+
+# install AWS CLI
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+	./aws/install
 
 COPY backup.sh .
-ENTRYPOINT [ "/scripts/backup.sh" ]
+ENTRYPOINT [ "./backup.sh" ]
