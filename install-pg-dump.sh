@@ -8,15 +8,15 @@ if [[ -z "$POSTGRES_VERSION" ]]; then
   exit 1
 fi
 
-if [[ "$POSTGRES_VERSION" != @(11|12|13|14) ]]; then
-  echo "POSTGRES_VERSION must be one of 11, 12, 13, 14"
+if [[ "$POSTGRES_VERSION" != @(16) ]]; then
+  echo "POSTGRES_VERSION must be one of 16"
   exit 1
 fi
 
 cat <<EOF > /etc/yum.repos.d/pgdg.repo
 [pgdg$POSTGRES_VERSION]
 name=PostgreSQL $POSTGRES_VERSION for RHEL/CentOS 7 - x86_64
-baseurl=http://download.postgresql.org/pub/repos/yum/$POSTGRES_VERSION/redhat/rhel-7-x86_64
+baseurl=http://download.postgresql.org/pub/repos/yum/$POSTGRES_VERSION/redhat/rhel-9.9-x86_64
 enabled=1
 gpgcheck=0
 EOF
